@@ -1,29 +1,56 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+// app/_layout.tsx
+import { LinearGradient } from 'expo-linear-gradient';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { colors } from '../constants/Theme';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
+  const HeaderBg = () => (
+    <LinearGradient
+      colors={['#0b0b0f', '#14141a']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={{ flex: 1 }}
+    />
+  );
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+    <>
+      <StatusBar style="light" />
+      <Stack
+        initialRouteName="index"
+        screenOptions={{
+          contentStyle: { backgroundColor: colors.bg },
+          headerTitleAlign: 'center',
+          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: 'transparent' },
+          headerBackground: () => <HeaderBg />,
+          headerShadowVisible: false,
+          headerTitleStyle: styles.headerTitle,
+          animation: 'slide_from_right',
+        
+        }}
+      >
+        <Stack.Screen
+          name="index"
+          options={{ title: 'Karats' }}
+        />
+        <Stack.Screen
+          name="details"
+          options={{
+            title: 'Details',
+          }}
+        />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  headerTitle: {
+    fontWeight: '800',
+    letterSpacing: 1, // valid RN TextStyle; typed via StyleSheet so TS won't complain
+  },
+});
