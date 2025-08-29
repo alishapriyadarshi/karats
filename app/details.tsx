@@ -2,15 +2,15 @@ import { Redirect, Stack, useLocalSearchParams } from 'expo-router';
 import React, { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { colors, radii, spacing } from '../constants/Theme';
 import { formatDateTime, formatMoney, formatPercent } from '../constants/Format';
+import { colors, radii, spacing } from '../constants/Theme';
 import type { MetalModel } from '../constants/Types';
 
 export default function DetailsScreen() {
   const params = useLocalSearchParams();
   const { metalData } = params as { metalData?: string | string[] };
 
-  // Normalize param to a single string
+
   const metalJson: string | null = useMemo(() => {
     if (!metalData) return null;
     if (Array.isArray(metalData)) return metalData[0] ?? null;

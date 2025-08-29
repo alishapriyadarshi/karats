@@ -51,6 +51,6 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   headerTitle: {
     fontWeight: '800',
-    letterSpacing: 1, // valid RN TextStyle; typed via StyleSheet so TS won't complain
+    letterSpacing: 1, 
   },
 });
